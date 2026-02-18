@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const backendSitemapURL =
-  "https://nodejs-production-40ae.up.railway.app/sitemap.xml";
+  "https://lottery-backend-omega.vercel.app/api/sitemap.xml";
 const frontendPath = path.join(__dirname, "../public/sitemap.xml");
 
 console.log("🔄 Downloading sitemap from backend...");
@@ -28,7 +28,7 @@ https
   .get(backendSitemapURL, (response) => {
     if (response.statusCode !== 200) {
       console.error(
-        `❌ Failed to download sitemap. Status: ${response.statusCode}`
+        `❌ Failed to download sitemap. Status: ${response.statusCode}`,
       );
       process.exit(1);
     }
