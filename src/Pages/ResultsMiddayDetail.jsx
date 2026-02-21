@@ -48,15 +48,12 @@ const ResultsMiddayDetail = () => {
           return;
         }
 
-        const data = await getPrizeBreakDownByPostandDraw(id);
+        const data = await getPrizeBreakDownByPostandDraw(id, "midday");
         if (!isMounted) return; // stop if unmounted
 
-        const midday = data.prizes.filter((p) => p.draw_type === "midday");
-        const evening = data.prizes.filter((p) => p.draw_type === "evening");
+        setMiddayBreakdown(data?.prizes);
 
-        setMiddayBreakdown(midday);
-        setEveningBreakdown(evening);
-        setTotals(data.totals);
+        setTotals(data?.totals?.midday);
       } catch (err) {
         if (isMounted) {
           console.error("Error fetching prize breakdowns:", err);
@@ -168,7 +165,7 @@ const ResultsMiddayDetail = () => {
             <NumbersDisplay
               title="Midday"
               numbers={postData?.Midday_Winnings}
-              winners={totals.midday}
+              winners={totals}
             />
           </div>
         </div>
@@ -185,7 +182,7 @@ const ResultsMiddayDetail = () => {
           <PrizeBreakdownTable
             title="Midday"
             data={middayBreakdown}
-            totals={totals.midday}
+            totals={totals}
           />
         </div>
 

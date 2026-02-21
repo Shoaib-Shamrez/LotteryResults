@@ -175,7 +175,7 @@ const EditCategoryForm = ({ categoryId, initialData, onUpdate, onClose }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {formData.Winners.map((winner, idx) => (
+                    {formData?.Winners?.map((winner, idx) => (
                       <tr key={idx}>
                         <td className="px-2 py-1 border">
                           <input
@@ -230,7 +230,7 @@ const EditCategoryForm = ({ categoryId, initialData, onUpdate, onClose }) => {
                             type="button"
                             onClick={() => {
                               const newWinners = formData.Winners.filter(
-                                (_, i) => i !== idx
+                                (_, i) => i !== idx,
                               );
                               setFormData({ ...formData, Winners: newWinners });
                             }}
@@ -297,7 +297,7 @@ const EditCategoryForm = ({ categoryId, initialData, onUpdate, onClose }) => {
             {Array.isArray(formData.How_To_Play) &&
             formData.How_To_Play.length > 0 ? (
               <div className="space-y-3">
-                {formData.How_To_Play.map((step, idx) => (
+                {formData?.How_To_Play?.map((step, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <input
                       type="text"
@@ -332,7 +332,7 @@ const EditCategoryForm = ({ categoryId, initialData, onUpdate, onClose }) => {
                       type="button"
                       onClick={() => {
                         const newSteps = formData.How_To_Play.filter(
-                          (_, i) => i !== idx
+                          (_, i) => i !== idx,
                         );
                         setFormData({ ...formData, How_To_Play: newSteps });
                       }}

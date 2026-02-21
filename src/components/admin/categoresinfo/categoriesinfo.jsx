@@ -34,7 +34,7 @@ const CategoriesInfoPage = () => {
     <div>
       <h1>Categories</h1>
       <ul>
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <li key={category.id}>
             <Link to={`/admin/categories/${category.id}`}>{category.name}</Link>
           </li>

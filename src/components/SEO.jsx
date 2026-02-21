@@ -96,7 +96,7 @@ const SEO = ({
       {type === "article" &&
         tags &&
         tags.length > 0 &&
-        tags.map((tag, index) => (
+        tags?.map((tag, index) => (
           <meta property="article:tag" content={tag} key={index} />
         ))}
 

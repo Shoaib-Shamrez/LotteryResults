@@ -74,22 +74,22 @@ const CreatePost = memo(() => {
   const handleUpdateRow = (index, updatedRow, session) => {
     if (session === "midday") {
       setMiddayBreakdown((prev) =>
-        prev.map((r, i) => (i === index ? updatedRow : r))
+        prev.map((r, i) => (i === index ? updatedRow : r)),
       );
       setFormData((prev) => ({
         ...prev,
-        middayBreakdown: prev.middayBreakdown.map((r, i) =>
-          i === index ? updatedRow : r
+        middayBreakdown: prev.middayBreakdown?.map((r, i) =>
+          i === index ? updatedRow : r,
         ),
       }));
     } else if (session === "evening") {
       setEveningBreakdown((prev) =>
-        prev.map((r, i) => (i === index ? updatedRow : r))
+        prev.map((r, i) => (i === index ? updatedRow : r)),
       );
       setFormData((prev) => ({
         ...prev,
-        eveningBreakdown: prev.eveningBreakdown.map((r, i) =>
-          i === index ? updatedRow : r
+        eveningBreakdown: prev.eveningBreakdown?.map((r, i) =>
+          i === index ? updatedRow : r,
         ),
       }));
     }
@@ -147,7 +147,7 @@ const CreatePost = memo(() => {
           const result = await createPrizeBreakdown(
             dataToCreate,
             "midday",
-            newPostId
+            newPostId,
           );
           console.log("✓ Created midday row:", result);
         } catch (err) {
@@ -177,7 +177,7 @@ const CreatePost = memo(() => {
           const result = await createPrizeBreakdown(
             dataToCreate,
             "evening",
-            newPostId
+            newPostId,
           );
           console.log("✓ Created evening row:", result);
         } catch (err) {
@@ -257,7 +257,7 @@ const CreatePost = memo(() => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select category</option>
-                {categories.map((category) => (
+                {categories?.map((category) => (
                   <option key={category.id} value={category.slug}>
                     {category.slug}
                   </option>

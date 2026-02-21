@@ -91,7 +91,7 @@ const AdminSidebar = memo(() => {
       {/* Navigation */}
       <nav className="flex-1 p-4">
         <ul className="space-y-2">
-          {filteredMenuItems.map((item) => {
+          {filteredMenuItems?.map((item) => {
             const isActive = location.pathname === item.path;
             return (
               <li key={item.path}>

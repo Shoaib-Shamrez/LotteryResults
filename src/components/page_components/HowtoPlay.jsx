@@ -5,7 +5,7 @@ const HowToPlay = ({ steps }) => (
   <div className="mb-8 p-6 bg-white rounded-lg shadow-md">
     <h2 className="text-2xl font-bold mb-4">How to Play</h2>
     <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
-      {steps.map((step, idx) => (
+      {steps?.map((step, idx) => (
         <div
           key={idx}
           className="relative bg-blue-800 overflow-hidden text-white p-6 rounded-xl shadow flex flex-col items-center justify-center text-center"
@@ -18,7 +18,14 @@ const HowToPlay = ({ steps }) => (
 
           {/* Icon (replace with actual shop/store icon if you have one) */}
           <div className="mb-4">
-            <img src={step[1]} alt="store" width={100} height={100} loading="lazy" decoding="async" />
+            <img
+              src={step[1]}
+              alt="store"
+              width={100}
+              height={100}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
           {/* Step Text */}

@@ -12,15 +12,15 @@ import AdBanner from "../components/AdBanner";
 // );
 
 import LotteryHero from "../components/page_components/LotteryHero";
-const LotteryHistory = lazy(() =>
-  import("../components/page_components/LotteryHistory")
+const LotteryHistory = lazy(
+  () => import("../components/page_components/LotteryHistory"),
 );
 const HowToPlay = lazy(() => import("../components/page_components/HowtoPlay"));
-const TopWinners = lazy(() =>
-  import("../components/page_components/TopWinners")
+const TopWinners = lazy(
+  () => import("../components/page_components/TopWinners"),
 );
-const LotteryFAQs = lazy(() =>
-  import("../components/page_components/LotteryFAQs")
+const LotteryFAQs = lazy(
+  () => import("../components/page_components/LotteryFAQs"),
 );
 
 const LotteryPage = () => {
@@ -61,7 +61,7 @@ const LotteryPage = () => {
             obs.disconnect();
           }
         },
-        { rootMargin: "200px" }
+        { rootMargin: "200px" },
       );
       obs.observe(node);
       return () => obs.disconnect();
@@ -109,11 +109,11 @@ const LotteryPage = () => {
   const canonicalUrl = `${window.location.origin}/${slug}`;
 
   // Prepare SEO data
-  const seoTitle = `${lottery.NAME} - Latest Results, How to Play & Prize Info`;
+  const seoTitle = `${lottery?.name} - Latest Results, How to Play & Prize Info`;
   const seoDescription =
     lottery.description ||
-    `Everything you need to know about ${lottery.NAME}. Check latest results, learn how to play, view prize breakdowns, and see top winners. Updated daily with official lottery information.`;
-  const seoKeywords = `${lottery.NAME}, lottery, how to play, winning numbers, results, prize breakdown, lottery winners, ${lottery.NAME} results`;
+    `Everything you need to know about ${lottery.name}. Check latest results, learn how to play, view prize breakdowns, and see top winners. Updated daily with official lottery information.`;
+  const seoKeywords = `${lottery.name}, lottery, how to play, winning numbers, results, prize breakdown, lottery winners, ${lottery.name} results`;
 
   return (
     <>
@@ -132,9 +132,9 @@ const LotteryPage = () => {
             <div className="h-28 bg-white rounded mb-8 animate-pulse" />
           }
         >
-          <LotteryHero title={lottery.NAME} description={lottery.description} />
+          <LotteryHero title={lottery.name} description={lottery.description} />
         </Suspense> */}
-        <LotteryHero title={lottery.NAME} description={lottery.description} />
+        <LotteryHero title={lottery?.name} description={lottery?.description} />
         <div className="min-h-[120px] mb-8">
           {adsUnderHeader.map((a) => (
             <AdBanner key={a.slot} slot={a.slot} height={120} />
@@ -148,7 +148,7 @@ const LotteryPage = () => {
             }
           >
             <div className="min-h-64">
-              <LotteryHistory history={lottery.History} />
+              <LotteryHistory history={lottery?.history} />
             </div>
           </Suspense>
         </LazySection>
@@ -160,7 +160,7 @@ const LotteryPage = () => {
             }
           >
             <div className="min-h-80">
-              <HowToPlay steps={lottery.How_To_Play} />
+              <HowToPlay steps={lottery?.how_to_play} />
             </div>
           </Suspense>
         </LazySection>
@@ -176,7 +176,7 @@ const LotteryPage = () => {
               <div className="h-56 bg-gray-100 rounded mb-8 animate-pulse" />
             }
           >
-            <TopWinners winners={lottery.Winners} />
+            <TopWinners winners={lottery?.winners} />
           </Suspense>
         </LazySection>
         <div className=" mb-8">

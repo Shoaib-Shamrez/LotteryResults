@@ -17,14 +17,18 @@ export const getPostById = async (id) => {
   return response.json(); // ✅ await here
 };
 export const getPostbyCategory_And_Date = async (date, category) => {
-  const response = await fetch(`${API_BASE_URL}/posts/${date}/${category}`);
+  const categoriesinlowercase = category.toLowerCase();
+  const response = await fetch(
+    `${API_BASE_URL}/posts/${date}/${categoriesinlowercase}`,
+  );
 
   if (!response.ok) throw new Error("Failed to fetch post");
 
   return response.json(); // ✅ await here
 };
 export const getPostBycategory = async (category) => {
-  const res = await fetch(`${API_BASE_URL}/posts/${category}`);
+  const categoriesinlowercase = category.toLowerCase();
+  const res = await fetch(`${API_BASE_URL}/posts/${categoriesinlowercase}`);
   if (!res.ok) throw new Error("Failed to fetch post");
 
   return res.json();
@@ -43,7 +47,7 @@ export const getAllMiddayresultsBycategory = async (category) => {
 };
 export const getPrizeBreakDownByPostandDraw = async (postId, draw_type) => {
   const res = await fetch(
-    `${API_BASE_URL}/prize-breakdowns/${postId}/${draw_type}`
+    `${API_BASE_URL}/prize-breakdowns/${postId}/${draw_type}`,
   );
   if (!res.ok) throw new Error("Failed to fetch post");
 

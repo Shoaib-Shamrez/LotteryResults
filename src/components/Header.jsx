@@ -237,7 +237,7 @@ export default function Header({ headerbgColor = "bg-white" }) {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex gap-3 relative">
-          {navItems.map((item, index) => (
+          {navItems?.map((item, index) => (
             <div
               key={index}
               className="relative group"
@@ -256,7 +256,7 @@ export default function Header({ headerbgColor = "bg-white" }) {
                 (item.subMenus ? (
                   // 🟦 Mega menu for "More"
                   <div className="absolute left-0   bg-blue-900 text-white shadow-lg z-50 p-6 grid grid-cols-3 gap-6 w-md">
-                    {item.subMenus.map((submenu, sIndex) => (
+                    {item.subMenus?.map((submenu, sIndex) => (
                       <div key={sIndex}>
                         {submenu.logo && (
                           <img
@@ -273,7 +273,7 @@ export default function Header({ headerbgColor = "bg-white" }) {
                         <hr
                           className={`border-t-2 ${submenu.borderColor} mb-3`}
                         />
-                        {submenu.links.map((link, lIndex) => (
+                        {submenu?.links?.map((link, lIndex) => (
                           <Link
                             key={lIndex}
                             to={link.url}
@@ -301,7 +301,7 @@ export default function Header({ headerbgColor = "bg-white" }) {
                       />
                     )}
                     <hr className={`border-2 ${item.borderColor}`} />
-                    {item.links.map((link, idx) => (
+                    {item?.links?.map((link, idx) => (
                       <Link
                         key={idx}
                         to={link.url}
@@ -361,7 +361,7 @@ export default function Header({ headerbgColor = "bg-white" }) {
               </button>
             </div>
 
-            {navItems.map((item, index) => (
+            {navItems?.map((item, index) => (
               <div key={index}>
                 <button
                   className="w-full flex justify-between items-center font-bold px-4 py-3 bg-blue-800 rounded-lg hover:bg-blue-700 transition-colors"
@@ -384,7 +384,7 @@ export default function Header({ headerbgColor = "bg-white" }) {
                   (item.subMenus ? (
                     // 🟦 Mobile mega menu (stacked)
                     <div className="mt-2 bg-blue-800 rounded-lg p-4 space-y-6">
-                      {item.subMenus.map((submenu, sIndex) => (
+                      {item?.subMenus?.map((submenu, sIndex) => (
                         <div key={sIndex}>
                           {submenu.logo && (
                             <img
@@ -397,7 +397,7 @@ export default function Header({ headerbgColor = "bg-white" }) {
                             className={`border-t-2 ${submenu.borderColor} mb-3`}
                           />
                           <div className="space-y-2 text-center">
-                            {submenu.links.map((link, lIndex) => (
+                            {submenu?.links?.map((link, lIndex) => (
                               <Link
                                 key={lIndex}
                                 to={link.url}
@@ -423,7 +423,7 @@ export default function Header({ headerbgColor = "bg-white" }) {
                       )}
                       <hr className={`border-2 ${item.borderColor} mb-3`} />
                       <div className="space-y-2">
-                        {item.links.map((link, idx) => (
+                        {item?.links?.map((link, idx) => (
                           <Link
                             key={idx}
                             to={link.url}

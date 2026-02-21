@@ -56,7 +56,7 @@ const RecentPosts = memo(() => {
       </div>
 
       <div className="divide-y divide-gray-200">
-        {recentPosts.map((post) => (
+        {recentPosts?.map((post) => (
           <div
             key={post.id}
             className="p-6 hover:bg-gray-50 transition-colors duration-200"

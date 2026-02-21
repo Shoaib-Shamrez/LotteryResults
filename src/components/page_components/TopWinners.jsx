@@ -13,7 +13,7 @@ const TopWinners = ({ winners }) => (
         </tr>
       </thead>
       <tbody>
-        {winners.map((w, i) => (
+        {winners?.map((w, i) => (
           <tr key={i} className="text-center">
             <td className="border p-2">{w.name}</td>
             <td className="border p-2">{w.prize}</td>

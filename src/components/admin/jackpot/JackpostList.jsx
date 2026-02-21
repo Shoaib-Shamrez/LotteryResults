@@ -38,7 +38,7 @@ const JackpotList = memo(() => {
   const handleDelete = async (jackpotId) => {
     if (
       window.confirm(
-        "Are you sure you want to delete this jackpot? This action cannot be undone."
+        "Are you sure you want to delete this jackpot? This action cannot be undone.",
       )
     ) {
       setLoading(true);
@@ -51,7 +51,7 @@ const JackpotList = memo(() => {
       } catch (err) {
         console.error("Error deleting jackpot:", err);
         setDeleteMessage(
-          "❌ Failed to delete jackpot. Check console for details."
+          "❌ Failed to delete jackpot. Check console for details.",
         );
         setDeleteMessageType("error");
       } finally {
@@ -62,7 +62,7 @@ const JackpotList = memo(() => {
 
   // Search filter
   const filteredJackpots = jackpots.filter((jackpot) =>
-    jackpot.Jackpot_category.toLowerCase().includes(searchTerm.toLowerCase())
+    jackpot.Jackpot_category.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -136,7 +136,7 @@ const JackpotList = memo(() => {
             </thead>
 
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredJackpots.map((jackpot) => (
+              {filteredJackpots?.map((jackpot) => (
                 <tr key={jackpot.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
