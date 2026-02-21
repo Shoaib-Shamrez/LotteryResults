@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const backendSitemapURL =
-  "https://lottery-backend-omega.vercel.app/api/sitemap.xml";
+  "https://lottery-backend-omega.vercel.app/sitemap.xml";
 const frontendPath = path.join(__dirname, "../public/sitemap.xml");
 
 console.log("🔄 Downloading sitemap from backend...");
