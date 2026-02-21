@@ -2,16 +2,14 @@ name: Keep Database Awake
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # every 5 minutes
+    - cron: "*/5 * * * *" # every 5 minutes
   workflow_dispatch: {}
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-
-       
       - name: Ping DB via lightweight API query
         run: |
           echo "Pinging database..."
-          curl -fsS https://nodejs-production-40ae.up.railway.app/api/user/users || true
+          curl -fsS https://lottery-results-sigma.vercel.app/api/user/users || true

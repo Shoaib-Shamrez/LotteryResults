@@ -150,7 +150,9 @@ const navItems = [
 export default function Header({ headerbgColor = "bg-white" }) {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [logo, setlogo] = useState("http://localhost:5173/vite.svg");
+  const [logo, setlogo] = useState(
+    "https://lottery-results-sigma.vercel.app/vite.svg",
+  );
   // Add these inside Header()
   const [query, setQuery] = useState("");
 
