@@ -62,7 +62,7 @@ const JackpotList = memo(() => {
 
   // Search filter
   const filteredJackpots = jackpots.filter((jackpot) =>
-    jackpot.Jackpot_category.toLowerCase().includes(searchTerm.toLowerCase()),
+    jackpot.Jackpot_category?.toLowerCase().includes(searchTerm?.toLowerCase()),
   );
 
   return (

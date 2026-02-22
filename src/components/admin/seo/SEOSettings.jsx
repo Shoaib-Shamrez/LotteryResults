@@ -59,7 +59,7 @@ const SEOSettings = memo(() => {
   const loadSitemapInfo = async () => {
     try {
       const response = await fetch(
-        `https://nodejs-production-40ae.up.railway.app/sitemap.xml`
+        `https://lottery-backend-omega.vercel.app/sitemap.xml`,
       );
       if (response.ok) {
         const xmlText = await response.text();
@@ -108,7 +108,7 @@ const SEOSettings = memo(() => {
         !formData.canonicalUrl
       ) {
         setSaveMessage(
-          "Site title, description, and canonical URL are required"
+          "Site title, description, and canonical URL are required",
         );
         setSaveMessageType("error");
         setSaveLoading(false);
@@ -121,7 +121,7 @@ const SEOSettings = memo(() => {
 
       if (!validateUrl(formData.siteLogo)) {
         setSaveMessage(
-          "❌ Logo must be a relative path (/assets/...) or full URL"
+          "❌ Logo must be a relative path (/assets/...) or full URL",
         );
         setSaveMessageType("error");
         return;
@@ -129,7 +129,7 @@ const SEOSettings = memo(() => {
 
       if (!validateUrl(formData.siteIcon)) {
         setSaveMessage(
-          "❌ Icon must be a relative path (/assets/...) or full URL"
+          "❌ Icon must be a relative path (/assets/...) or full URL",
         );
         setSaveMessageType("error");
         return;
@@ -159,7 +159,7 @@ const SEOSettings = memo(() => {
     setSitemapMessage("");
 
     try {
-      const response = await fetch(`${API_URL}/seo/sync-sitemap`, {
+      const response = await fetch(`${API_URL}/sitemaps/regenerate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
@@ -168,7 +168,7 @@ const SEOSettings = memo(() => {
 
       if (response.ok && data.success) {
         setSitemapMessage(
-          `✅ Sitemap synced successfully! (${data.urlCount} URLs)`
+          `✅ Sitemap synced successfully! (${data.urlCount} URLs)`,
         );
         setSitemapMessageType("success");
         await loadSitemapInfo();

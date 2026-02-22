@@ -76,6 +76,10 @@ export default defineConfig({
     minify: "esbuild",
     assetsInlineLimit: 4096,
   },
+  server: {
+    host: true,
+    port: 5173,
+  },
   esbuild: {
     legalComments: "none",
   },
