@@ -64,8 +64,9 @@ const Home = () => {
 
         if (megaPost && megaPost[0]) {
           const post = megaPost[0];
-          const midday = parseNumbers(post.Midday_Winnings);
-          const evening = parseNumbers(post.Evening_Winnings);
+
+          const midday = parseNumbers(post.midday_winnings);
+          const evening = parseNumbers(post.evening_winnings);
 
           setMegaData({
             id: 1,
@@ -73,10 +74,10 @@ const Home = () => {
             headerLogo: MegaMillions,
             headerbgColor: "bg-blue-500",
             date: formatDate(post.created_at),
-            midday: midday.numbers,
-            evening: evening.numbers,
-            MidBonusBall: midday.bonusNumber,
-            EveBonusBall: evening.bonusNumber,
+            midday: midday?.numbers,
+            evening: evening?.numbers,
+            MidBonusBall: midday?.bonusNumber,
+            EveBonusBall: evening?.bonusNumber,
             jackpot: megaJackpot[0].amount || "N/A",
             nextDrawDate: megaJackpot[0].draw_date || null,
             payoutLink: `/results/${post.id}`,
@@ -92,8 +93,8 @@ const Home = () => {
 
         if (powerPost && powerPost[0]) {
           const post = powerPost[0];
-          const midday = parseNumbers(post.Midday_Winnings);
-          const evening = parseNumbers(post.Evening_Winnings);
+          const midday = parseNumbers(post.midday_winnings);
+          const evening = parseNumbers(post.evening_winnings);
 
           setPowerData({
             id: 2,

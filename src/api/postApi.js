@@ -29,6 +29,7 @@ export const getPostbyCategory_And_Date = async (date, category) => {
 export const getPostBycategory = async (category) => {
   const categoriesinlowercase = category.toLowerCase();
   const res = await fetch(`${API_BASE_URL}/posts/${categoriesinlowercase}`);
+
   if (!res.ok) throw new Error("Failed to fetch post");
 
   return res.json();
