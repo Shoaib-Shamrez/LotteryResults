@@ -1,1 +1,1 @@
-### Lottery Results
+### Lottery Result
