@@ -1,4 +1,7 @@
 // Email service utility functions
+import { apiUrl } from "./apiBase";
+
+const CRED = { credentials: "include" };
 
 // Email templates
 export const emailTemplates = {
@@ -190,19 +193,17 @@ export const emailTemplates = {
 // Send email notification to subscribers
 export const sendPostNotification = async (post, subscribers) => {
   try {
-    const response = await fetch('/api/admin/email/send-post-notification', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      },
+    const response = await fetch(apiUrl("/admin/email/send-post-notification"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         post,
         subscribers: subscribers.map(sub => ({
           email: sub.email,
           unsubscribeToken: sub.unsubscribeToken
         }))
-      })
+      }),
+      ...CRED,
     });
 
     if (!response.ok) {
@@ -219,15 +220,11 @@ export const sendPostNotification = async (post, subscribers) => {
 // Send welcome email to new subscriber
 export const sendWelcomeEmail = async (subscriber) => {
   try {
-    const response = await fetch('/api/admin/email/send-welcome', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      },
-      body: JSON.stringify({
-        subscriber
-      })
+    const response = await fetch(apiUrl("/admin/email/send-welcome"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subscriber }),
+      ...CRED,
     });
 
     if (!response.ok) {
@@ -244,15 +241,11 @@ export const sendWelcomeEmail = async (subscriber) => {
 // Send unsubscribe confirmation
 export const sendUnsubscribeConfirmation = async (subscriber) => {
   try {
-    const response = await fetch('/api/admin/email/send-unsubscribe-confirmation', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      },
-      body: JSON.stringify({
-        subscriber
-      })
+    const response = await fetch(apiUrl("/admin/email/send-unsubscribe-confirmation"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subscriber }),
+      ...CRED,
     });
 
     if (!response.ok) {
@@ -269,16 +262,10 @@ export const sendUnsubscribeConfirmation = async (subscriber) => {
 // Get email service status
 export const getEmailServiceStatus = async () => {
   try {
-    const response = await fetch('/api/admin/email/status', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      }
-    });
-
+    const response = await fetch(apiUrl("/admin/email/status"), CRED);
     if (!response.ok) {
       throw new Error('Failed to get email service status');
     }
-
     return await response.json();
   } catch (error) {
     console.error('Error getting email service status:', error);
@@ -289,18 +276,14 @@ export const getEmailServiceStatus = async () => {
 // Test email configuration
 export const testEmailConfiguration = async () => {
   try {
-    const response = await fetch('/api/admin/email/test', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      }
+    const response = await fetch(apiUrl("/admin/email/test"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      ...CRED,
     });
-
     if (!response.ok) {
       throw new Error('Failed to test email configuration');
     }
-
     return await response.json();
   } catch (error) {
     console.error('Error testing email configuration:', error);
@@ -309,18 +292,12 @@ export const testEmailConfiguration = async () => {
 };
 
 // Get email statistics
-export const getEmailStatistics = async (period = '30d') => {
+export const getEmailStatistics = async (period = "30d") => {
   try {
-    const response = await fetch(`/api/admin/email/statistics?period=${period}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      }
-    });
-
+    const response = await fetch(apiUrl(`/admin/email/statistics?period=${period}`), CRED);
     if (!response.ok) {
       throw new Error('Failed to get email statistics');
     }
-
     return await response.json();
   } catch (error) {
     console.error('Error getting email statistics:', error);

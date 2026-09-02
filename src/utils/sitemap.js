@@ -1,4 +1,7 @@
 // Sitemap utility functions
+import { apiUrl } from "./apiBase";
+
+const CRED = { credentials: "include" };
 
 const SITEMAP_URL = '/sitemap.xml';
 
@@ -61,22 +64,13 @@ export const generateSitemapXML = (entries) => {
 // Add post to sitemap
 export const addPostToSitemap = async (post) => {
   try {
-    const response = await fetch('/api/admin/seo/sitemap/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      },
-      body: JSON.stringify({
-        type: 'post',
-        data: post
-      })
+    const response = await fetch(apiUrl("/admin/seo/sitemap/add"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "post", data: post }),
+      ...CRED,
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to add post to sitemap');
-    }
-
+    if (!response.ok) throw new Error('Failed to add post to sitemap');
     return await response.json();
   } catch (error) {
     console.error('Error adding post to sitemap:', error);
@@ -87,22 +81,13 @@ export const addPostToSitemap = async (post) => {
 // Remove post from sitemap
 export const removePostFromSitemap = async (postId) => {
   try {
-    const response = await fetch('/api/admin/seo/sitemap/remove', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      },
-      body: JSON.stringify({
-        type: 'post',
-        id: postId
-      })
+    const response = await fetch(apiUrl("/admin/seo/sitemap/remove"), {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "post", id: postId }),
+      ...CRED,
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to remove post from sitemap');
-    }
-
+    if (!response.ok) throw new Error('Failed to remove post from sitemap');
     return await response.json();
   } catch (error) {
     console.error('Error removing post from sitemap:', error);
@@ -113,22 +98,13 @@ export const removePostFromSitemap = async (postId) => {
 // Update post in sitemap
 export const updatePostInSitemap = async (post) => {
   try {
-    const response = await fetch('/api/admin/seo/sitemap/update', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      },
-      body: JSON.stringify({
-        type: 'post',
-        data: post
-      })
+    const response = await fetch(apiUrl("/admin/seo/sitemap/update"), {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "post", data: post }),
+      ...CRED,
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to update post in sitemap');
-    }
-
+    if (!response.ok) throw new Error('Failed to update post in sitemap');
     return await response.json();
   } catch (error) {
     console.error('Error updating post in sitemap:', error);
@@ -171,22 +147,13 @@ export const generateCompleteSitemap = async (posts, categories) => {
     const sitemapXML = generateSitemapXML(entries);
 
     // Save to server
-    const response = await fetch('/api/admin/seo/sitemap/generate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      },
-      body: JSON.stringify({
-        sitemap: sitemapXML,
-        entries: entries
-      })
+    const response = await fetch(apiUrl("/admin/seo/sitemap/generate"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sitemap: sitemapXML, entries: entries }),
+      ...CRED,
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to generate sitemap');
-    }
-
+    if (!response.ok) throw new Error('Failed to generate sitemap');
     return await response.json();
   } catch (error) {
     console.error('Error generating sitemap:', error);
@@ -197,16 +164,8 @@ export const generateCompleteSitemap = async (posts, categories) => {
 // Get sitemap status
 export const getSitemapStatus = async () => {
   try {
-    const response = await fetch('/api/admin/seo/sitemap/status', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to get sitemap status');
-    }
-
+    const response = await fetch(apiUrl("/admin/seo/sitemap/status"), CRED);
+    if (!response.ok) throw new Error('Failed to get sitemap status');
     return await response.json();
   } catch (error) {
     console.error('Error getting sitemap status:', error);
@@ -217,21 +176,15 @@ export const getSitemapStatus = async () => {
 // Submit sitemap to search engines
 export const submitSitemapToSearchEngines = async () => {
   try {
-    const response = await fetch('/api/admin/seo/sitemap/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-      }
+    const response = await fetch(apiUrl("/admin/seo/sitemap/submit"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      ...CRED,
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to submit sitemap to search engines');
-    }
-
+    if (!response.ok) throw new Error('Failed to submit sitemap to search engines');
     return await response.json();
   } catch (error) {
-    console.error('Error submitting sitemap:', error);
+    console.error('Error submitting sitemap to search engines:', error);
     throw error;
   }
 };

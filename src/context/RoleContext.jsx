@@ -17,6 +17,7 @@ const ROLE_PERMISSIONS = {
       "manage_admins",
       "view_analytics",
       "manage_ad_placement",
+      "manage_sync_runs",
     ],
   },
   admin: {
@@ -30,6 +31,7 @@ const ROLE_PERMISSIONS = {
       "manage_site_settings",
       "view_analytics",
       "manage_ad_placement",
+      "manage_sync_runs",
     ],
   },
   editor: {
@@ -97,6 +99,7 @@ export const RoleProvider = ({ children }) => {
     canManageCategoriesinfo: roleInfo.hasPermission("canManageCategoriesinfo"),
     canManageAdPlacement: roleInfo.hasPermission("manage_ad_placement"),
     canManageAdmins: roleInfo.hasPermission("manage_admins"),
+    canManageSyncRuns: roleInfo.hasPermission("manage_sync_runs"),
   };
 
   return <RoleContext.Provider value={value}>{children}</RoleContext.Provider>;

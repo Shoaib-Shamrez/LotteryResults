@@ -13,6 +13,7 @@ const AdminSidebar = memo(() => {
     canViewAnalytics,
     canManageAdPlacement,
     canManageAdmins,
+    canManageSyncRuns,
   } = useRole();
 
   const menuItems = [
@@ -58,6 +59,12 @@ const AdminSidebar = memo(() => {
       icon: "🔍",
       permission: "manage_seo",
     },
+    {
+      name: "Sync Runs",
+      path: "/admin/sync-runs",
+      icon: "🔁",
+      permission: "manage_sync_runs",
+    },
   ];
 
   const filteredMenuItems = menuItems.filter((item) => {
@@ -76,6 +83,8 @@ const AdminSidebar = memo(() => {
         return canManageSEO;
       case "manage_site_settings":
         return canManageSiteSettings;
+      case "manage_sync_runs":
+        return canManageSyncRuns;
       default:
         return true;
     }

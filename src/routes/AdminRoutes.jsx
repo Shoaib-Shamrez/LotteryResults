@@ -7,9 +7,10 @@ import AdminLayout from "../components/admin/layout/AdminLayout";
 const Dashboard = lazy(() => import("../Pages/admin/Dashboard"));
 const Posts = lazy(() => import("../Pages/admin/Posts"));
 const Jackpots = lazy(() => import("../Pages/admin/Jackpot"));
-const AdminCategoriesPage = lazy(() => import("../Pages/admin/Categories"));
+const AdminCategories = lazy(() => import("../Pages/admin/Categories"));
 const Users = lazy(() => import("../Pages/admin/Users"));
 const SEO = lazy(() => import("../Pages/admin/SEO"));
+const SyncRuns = lazy(() => import("../Pages/admin/SyncRuns"));
 
 // Import post components for nested routes
 import PostList from "../components/admin/posts/PostList";
@@ -128,6 +129,16 @@ const AdminRoutes = memo(() => {
             element={
               <ProtectedRoute requiredPermission="manage_ad_placement">
                 <AdminPanel />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Sync Runs - admin/superadmin only */}
+          <Route
+            path="sync-runs"
+            element={
+              <ProtectedRoute requiredPermission="manage_sync_runs">
+                <SyncRuns />
               </ProtectedRoute>
             }
           />

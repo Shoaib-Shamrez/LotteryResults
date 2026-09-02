@@ -44,8 +44,12 @@ const AdminNavbar = memo(() => {
     };
   }, []);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.warn("Logout failed:", err);
+    }
     setShowDropdown(false);
   };
 

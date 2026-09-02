@@ -1,8 +1,8 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
+import { apiUrl } from "../utils/apiBase";
 
 const AuthContext = createContext();
 
-// Auth reducer for state management
 const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN_START":
@@ -49,39 +49,87 @@ const initialState = {
   error: null,
 };
 
+const STORAGE_KEYS = { userData: "userData", userRole: "userRole" };
+
+function clearLocalAuth() {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.userData);
+    localStorage.removeItem(STORAGE_KEYS.userRole);
+  } catch {}
+}
+
+function persistLocalAuth(user) {
+  try {
+    localStorage.setItem(STORAGE_KEYS.userData, JSON.stringify(user));
+    if (user?.role) localStorage.setItem(STORAGE_KEYS.userRole, user.role);
+  } catch {}
+}
+
+async function fetchMe() {
+  const res = await fetch(apiUrl("/user/me"), {
+    credentials: "include",
+  });
+  if (res.status === 401) return { ok: false };
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  if (!data.success || !data.user) return { ok: false };
+  return { ok: true, user: data.user };
+}
+
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Check for existing auth on mount
+  // On mount: verify session via /api/user/me (HttpOnly cookie auth).
   useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    const userRole = localStorage.getItem("userRole");
-
-    if (userData && userRole) {
+    let cancelled = false;
+    (async () => {
       try {
-        const user = JSON.parse(userData);
-        dispatch({ type: "LOGIN_SUCCESS", payload: user });
-      } catch (error) {
-        // Clear invalid data
-        localStorage.removeItem("userData");
-        localStorage.removeItem("userRole");
+        const result = await fetchMe();
+        if (cancelled) return;
+        if (result.ok) {
+          persistLocalAuth(result.user);
+          dispatch({ type: "LOGIN_SUCCESS", payload: result.user });
+        } else {
+          clearLocalAuth();
+          dispatch({ type: "LOGOUT" });
+        }
+      } catch (err) {
+        if (cancelled) return;
+        clearLocalAuth();
+        dispatch({ type: "LOGOUT" });
       }
-    }
+    })();
+    return () => { cancelled = true; };
   }, []);
+
+  const checkSession = async () => {
+    try {
+      const result = await fetchMe();
+      if (result.ok) {
+        persistLocalAuth(result.user);
+        dispatch({ type: "LOGIN_SUCCESS", payload: result.user });
+      } else {
+        clearLocalAuth();
+        dispatch({ type: "LOGOUT" });
+      }
+      return result.ok;
+    } catch {
+      clearLocalAuth();
+      dispatch({ type: "LOGOUT" });
+      return false;
+    }
+  };
 
   const login = async (credentials) => {
     dispatch({ type: "LOGIN_START" });
 
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-      const response = await fetch(`${API_BASE_URL}/user/login`, {
+      const response = await fetch(apiUrl("/user/login"), {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
-          email: credentials.email, // Changed from username to email
+          email: credentials.email,
           password: credentials.password,
         }),
       });
@@ -92,11 +140,9 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.message || "Login failed");
       }
 
-      // Store auth data
-      localStorage.setItem("userData", JSON.stringify(data.user));
-      localStorage.setItem("userRole", data.user.role);
-
-      dispatch({ type: "LOGIN_SUCCESS", payload: data.user });
+      const user = data.user;
+      persistLocalAuth(user);
+      dispatch({ type: "LOGIN_SUCCESS", payload: user });
       return data;
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.message });
@@ -104,9 +150,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("userData");
-    localStorage.removeItem("userRole");
+  const logout = async () => {
+    try {
+      await fetch(apiUrl("/user/logout"), {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      // Fire-and-forget: clear local state regardless.
+      console.warn("Backend logout failed (continuing with local logout):", err);
+    }
+    clearLocalAuth();
     dispatch({ type: "LOGOUT" });
   };
 
@@ -115,13 +169,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateUser = (updatedUserData) => {
-    // Update both context and localStorage
     const currentUserData = JSON.parse(
-      localStorage.getItem("userData") || "{}"
+      localStorage.getItem(STORAGE_KEYS.userData) || "{}"
     );
     const newUserData = { ...currentUserData, ...updatedUserData };
-
-    localStorage.setItem("userData", JSON.stringify(newUserData));
+    persistLocalAuth(newUserData);
     dispatch({ type: "UPDATE_USER", payload: updatedUserData });
   };
 
@@ -131,6 +183,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     clearError,
     updateUser,
+    checkSession,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
