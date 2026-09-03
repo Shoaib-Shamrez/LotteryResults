@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost, getAllcategories } from "../../../api/postApi";
 import EditablePrizeTable from "./PrizeBreakdownTableEditable";
+import SeoFieldsBlock from "./SeoFieldsBlock";
 import { createPrizeBreakdown } from "../../../api/prizwBreakdownApi";
 
 const CreatePost = memo(() => {
@@ -391,51 +392,17 @@ const CreatePost = memo(() => {
         </div>
 
         {/* SEO Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            SEO Settings
-          </h2>
-
-          <div className="space-y-6">
-            {/* Meta Title */}
-            <div>
-              <label
-                htmlFor="metaTitle"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Meta Title
-              </label>
-              <input
-                type="text"
-                id="metaTitle"
-                name="metaTitle"
-                value={formData.metaTitle}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="SEO title for search engines"
-              />
-            </div>
-
-            {/* Meta Description */}
-            <div>
-              <label
-                htmlFor="metaDescription"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Meta Description
-              </label>
-              <textarea
-                id="metaDescription"
-                name="metaDescription"
-                value={formData.metaDescription}
-                onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="SEO description for search engines"
-              />
-            </div>
-          </div>
-        </div>
+        <SeoFieldsBlock
+          title={{ id: "metaTitle", name: "metaTitle", value: formData.metaTitle }}
+          description={{ id: "metaDescription", name: "metaDescription", value: formData.metaDescription }}
+          category={formData.category}
+          date={formData.date}
+          middayWinningNumbers={formData.MiddaywinningNumbers}
+          eveningWinningNumbers={formData.EveningwinningNumbers}
+          formTitle={formData.title}
+          onChangeTitle={handleChange}
+          onChangeDescription={handleChange}
+        />
 
         {/* Actions */}
         <div className="flex items-center justify-end space-x-4">

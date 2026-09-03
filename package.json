@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run copy-sitemap && vite build",
+    "build": "vite build",
     "copy-sitemap": "node scripts/copySitemap.js",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build:analyze": "npm run copy-sitemap && vite build --mode analyze"
+    "build:analyze": "vite build --mode analyze"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",

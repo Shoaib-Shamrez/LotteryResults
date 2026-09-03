@@ -7,6 +7,7 @@ import {
   updatePost,
 } from "../../../api/postApi";
 import EditablePrizeTable from "./PrizeBreakdownTableEditable";
+import SeoFieldsBlock from "./SeoFieldsBlock";
 import {
   createPrizeBreakdown,
   deletePrizeBreakdown,
@@ -499,49 +500,17 @@ const EditPost = memo(() => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            SEO Settings
-          </h2>
-
-          <div className="space-y-6">
-            <div>
-              <label
-                htmlFor="meta_title"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Meta Title
-              </label>
-              <input
-                type="text"
-                id="meta_title"
-                name="meta_title"
-                value={formData.meta_title}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder={formData.meta_title}
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="meta_desc"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Meta Description
-              </label>
-              <textarea
-                id="meta_desc"
-                name="meta_desc"
-                value={formData.meta_desc}
-                onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder={formData.meta_desc}
-              />
-            </div>
-          </div>
-        </div>
+        <SeoFieldsBlock
+          title={{ id: "meta_title", name: "meta_title", value: formData.meta_title }}
+          description={{ id: "meta_desc", name: "meta_desc", value: formData.meta_desc }}
+          category={formData.category}
+          date={formData.created_at}
+          middayWinningNumbers={formData.Midday_Winnings}
+          eveningWinningNumbers={formData.Evening_Winnings}
+          formTitle={formData.title}
+          onChangeTitle={handleChange}
+          onChangeDescription={handleChange}
+        />
 
         <div className="flex items-center justify-end space-x-4">
           <button
