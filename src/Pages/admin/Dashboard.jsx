@@ -1,6 +1,7 @@
 import { memo } from "react";
 import DashboardStats from "../../components/admin/dashboard/DashboardStats";
 import RecentPosts from "../../components/admin/dashboard/RecentPosts";
+import SyncHealthCards from "../../components/admin/dashboard/SyncHealthCards";
 import { Link } from "react-router-dom";
 
 const Dashboard = memo(() => {
@@ -64,24 +65,9 @@ const Dashboard = memo(() => {
         {/* System status */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            System Status
+            Sync Health & Scheduler Status
           </h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Database</span>
-              <span className="flex items-center text-green-600">
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                Online
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Sitemap</span>
-              <span className="flex items-center text-green-600">
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                Updated
-              </span>
-            </div>
-          </div>
+          <SyncHealthCards />
         </div>
       </div>
     </div>

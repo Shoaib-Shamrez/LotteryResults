@@ -81,3 +81,13 @@ export const overrideDraw = async (postId, { midday_winnings, evening_winnings }
   });
   return jsonOrThrow(res, "Failed to override draw");
 };
+
+export const getSyncHealth = async () => {
+  const res = await fetch(apiUrl("/admin/sync/health"), CRED);
+  return jsonOrThrow(res, "Failed to fetch sync health");
+};
+
+export const getSchedulerStatus = async () => {
+  const res = await fetch(apiUrl("/admin/sync/scheduler-status"), CRED);
+  return jsonOrThrow(res, "Failed to fetch scheduler status");
+};
