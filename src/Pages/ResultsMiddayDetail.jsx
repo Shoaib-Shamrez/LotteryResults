@@ -11,6 +11,7 @@ import {
   getPrizeBreakDownByPostandDraw,
 } from "../api/postApi";
 import { useEffect, useState } from "react";
+import { apiUrl } from "../utils/apiBase";
 import { formatDate } from "../utils/utilityfun";
 import { useParams } from "react-router-dom";
 
@@ -176,6 +177,42 @@ const ResultsMiddayDetail = () => {
           nextDraw={dayjs().add(5, "hour").add(20, "minute").add(45, "second")}
           bgColor={"bg-blue-900"}
         />
+
+        {/* CSV Download Button */}
+        <div className="my-4 flex items-center">
+          <button
+            onClick={async () => {
+              try {
+                const response = await fetch(`${apiUrl(`/posts/${postData.id}/export?format=csv`)}`, {
+                  credentials: 'include',
+                });
+                if (!response.ok) {
+                  throw new Error('Failed to download CSV');
+                }
+                const blob = await response.blob();
+                const disposition = response.headers.get('Content-Disposition');
+                let filename = 'export.csv';
+                if (disposition && disposition.includes('filename=')) {
+                  filename = disposition.split('filename=')[1].replace(/"/g, '');
+                }
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+              } catch (err) {
+                console.error(err);
+                alert('Error downloading CSV');
+              }
+            }}
+            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+          >
+            Download CSV
+          </button>
+        </div>
 
         {/* Prize Breakdown Section */}
         <div className="flex flex-col md:flex-row w-full justify-center">
