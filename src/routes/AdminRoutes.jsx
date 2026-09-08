@@ -59,7 +59,7 @@ const AdminRoutes = memo(() => {
             path="categoriesinfo"
             element={
               <ProtectedRoute requiredPermission="canManageCategoriesinfo">
-                <AdminCategoriesPage />
+                <AdminCategories />
               </ProtectedRoute>
             }
           >
