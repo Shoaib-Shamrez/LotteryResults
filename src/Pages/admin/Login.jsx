@@ -6,6 +6,7 @@ const Login = memo(() => {
   const { login, isAuthenticated, loading, error, clearError } = useAuth();
   const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     email: "", // Changed from username to email
     password: "",
@@ -32,13 +33,15 @@ const Login = memo(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsSubmitting(true);
     try {
       await login(formData);
       // Navigation will be handled by the redirect above
     } catch (error) {
       // Error is handled by the auth context
       console.error("Login failed:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -151,14 +154,14 @@ const Login = memo(() => {
             <div>
               <button
                 type="submit"
-                disabled={loading}
+                disabled={isSubmitting}
                 className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
-                  loading
+                  isSubmitting
                     ? "bg-blue-300 cursor-not-allowed"
                     : "bg-blue-600 hover:bg-blue-700"
                 }`}
               >
-                {loading ? (
+                {isSubmitting ? (
                   <div className="flex items-center">
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                     Signing in...

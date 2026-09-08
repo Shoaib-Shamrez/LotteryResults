@@ -37,7 +37,14 @@ const AdminRoutes = memo(() => {
     <Suspense fallback={<AdminLoadingFallback />}>
       <Routes>
         {/* Admin layout wrapper */}
-        <Route path="/" element={<AdminLayout />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
           {/* Dashboard - accessible to all authenticated users */}
           <Route
             index
